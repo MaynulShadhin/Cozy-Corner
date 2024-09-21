@@ -24,8 +24,8 @@ const Navbar = () => {
     ]
 
     return (
-        <div className='mx-auto container'>
-            <div className="navbar bg-base-100 md:py-2">
+        <div className='absolute w-full z-20'>
+            <div className="navbar bg-transparent md:py-2">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -48,7 +48,7 @@ const Navbar = () => {
                             {
                             navItems.map((item, index) => (
                                 <Link 
-                                className='font-semibold text-slate-800 hover:text-red-400 duration-100'
+                                className='font-semibold text-black hover:text-red-400 duration-100'
                                 href={item.path} key={index}>
                                     {item.title}
                                 </Link>
@@ -57,15 +57,15 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <Link href='/'>
-                        <Image src="/assests/icon/logo.png" alt='logo' height={60} width={120}></Image>
+                        <Image src="/assests/icon/favicon.png" alt='logo' height={60} width={120}></Image>
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <div className='flex items-center space-x-6'>
+                    <div className='flex items-center space-x-12'>
                         {
                             navItems.map((item, index) => (
                                 <Link 
-                                className='font-semibold text-slate-800 hover:text-red-400 duration-100'
+                                className=' text-white hover:text-red-400 duration-100'
                                 href={item.path} key={index}>
                                     {item.title}
                                 </Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-outline">Login</a>
+                    <a className="text-white border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-slate-800 duration-150" >Login</a>
                 </div>
             </div>
         </div>
