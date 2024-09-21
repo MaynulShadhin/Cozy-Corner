@@ -65,7 +65,7 @@ const Navbar = () => {
                         {
                             navItems.map((item, index) => (
                                 <Link 
-                                className=' text-white hover:text-red-400 duration-100'
+                                className='font-thin text-white duration-500 hover:line-through'
                                 href={item.path} key={index}>
                                     {item.title}
                                 </Link>
