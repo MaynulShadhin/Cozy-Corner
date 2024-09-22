@@ -55,7 +55,7 @@ const Banner = () => {
                             <div className='h-[250px] md:h-[600px] lg:h-screen'>
                                 <div className='flex items-center justify-center w-full h-full'>
                                     <div className='text-center'>
-                                        <h1 className={`${merriweather.className} text-white text-6xl font-semibold`}>{banner.title}</h1>
+                                        <h1 className={`${merriweather.className} text-white text-2xl md:text-6xl font-semibold`}>{banner.title}</h1>
                                         <button className='text-white border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-slate-800 duration-150 mt-6 font-thin'>DISCOVER</button>
                                     </div>
                                 </div>

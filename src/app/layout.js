@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import {Roboto} from "@next/font/google"
+import {Poppins} from "@next/font/google"
 import "./globals.css";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
@@ -14,7 +14,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-const roboto = Roboto({
+const poppins = Poppins({
 subsets: ['latin'],
 weight: ['100','300','400','700']
 })
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body
-        className={roboto.className}
+        className={poppins.className}
       >
         <Navbar></Navbar>
         {children}
