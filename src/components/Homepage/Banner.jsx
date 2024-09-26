@@ -33,10 +33,10 @@ const Banner = () => {
                 spaceBetween={30}
                 centeredSlides={true}
                 loop={true}
-                // autoplay={{
-                //     delay: 10000,
-                //     disableOnInteraction: false,
-                // }}
+                autoplay={{
+                    delay: 10000,
+                    disableOnInteraction: false,
+                }}
                 pagination={{
                     clickable: true,
                 }}

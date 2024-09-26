@@ -5,6 +5,8 @@ import ShopByChoice from './ShopByChoice';
 import OurProducts from './Our Products/OurProducts';
 import WhyChooseUs from './WhyChooseUs';
 import Elegence from './Elegence';
+import Peek from './Peek';
+import OurClients from './OurClients';
 
 const HomePage = () => {
     return (
@@ -15,6 +17,8 @@ const HomePage = () => {
             <OurProducts></OurProducts>
             <WhyChooseUs></WhyChooseUs>
             <Elegence></Elegence>
+            <Peek></Peek>
+            <OurClients></OurClients>
         </div>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <div>
+        <div style={{ backgroundImage: `linear-gradient(45deg,rgba(0,0,0,0.4), rgba(0,0,0,0.4)) ,url(/assests/wave.svg)` }}>
             <footer className="footer bg-base-300 text-base-content p-10">
                 <nav>
                     <h6 className="footer-title">Services</h6>
