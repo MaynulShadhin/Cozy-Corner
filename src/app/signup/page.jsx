@@ -12,7 +12,7 @@ const page = () => {
 
                     <form className="space-y-6">
                         <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Email address</label>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Your Name</label>
                             <input
                                 id="name"
                                 name="name"

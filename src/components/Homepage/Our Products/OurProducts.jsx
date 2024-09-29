@@ -1,11 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-
-const getProducts = async () => {
-    const res = await fetch('http://localhost:3000/products/api/get-all')
-    const products = res.json()
-    return products
-}
+import ProductCard from './ProductCard';
+import Link from 'next/link';
+import { getProducts } from '@/services/getProducts';
 
 const OurProducts = async () => {
     const { products } = await getProducts()
@@ -27,25 +24,19 @@ const OurProducts = async () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-center justify-center col-span-2'>
                     {/* card */}
                     {
-                        products?.map((product, idx) => (
-                            <div
-                                className='hover:scale-105 transition-all duration-200 cursor-pointer border border-gray-200'
-                                key={idx}>
-                                <Image className='w-full md:h-[250px] lg:h-[350px]' src={product.image} alt={product.name} width={400} height={350}></Image>
-                                <div className='bg-slate-300 p-4 text-slate-800'>
-                                    <h2 className='font-medium'>{product.name}</h2>
-                                    <p>${product.price}</p>
-                                </div>
-                            </div>
+                        products?.map((product) => (
+                            <ProductCard key={product.id} product={product}></ProductCard>
                         ))
                     }
                 </div>
             </div>
 
             <div className='text-center w-full mt-8'>
-                <button className='border px-4 py-3 font-semibold shadow-md hover:shadow-2xl duration-200 hover:scale-105'>
-                    See More
-                </button>
+                <Link href="/products">
+                    <button className='border px-4 py-3 font-semibold shadow-md hover:shadow-2xl duration-200 hover:scale-105'>
+                        See More
+                    </button>
+                </Link>
             </div>
         </div>
     );
