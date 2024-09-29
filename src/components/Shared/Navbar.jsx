@@ -1,6 +1,8 @@
+'use client'
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import LoginButton from '../LoginButton';
 
 const Navbar = () => {
 
@@ -24,11 +26,11 @@ const Navbar = () => {
     ]
 
     return (
-        <div className='absolute w-full z-20'>
+        <div className='bg-white z-50 shadow-lg'>
             <div className="navbar bg-transparent md:py-2">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn text-white btn-ghost lg:hidden">
+                        <div tabIndex={0} role="button" className="btn text-black btn-ghost lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-5 w-5"
@@ -46,27 +48,27 @@ const Navbar = () => {
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-30">
                             {
-                            navItems.map((item, index) => (
-                                <Link 
-                                className='font-semibold text-black hover:text-red-400 duration-100'
-                                href={item.path} key={index}>
-                                    {item.title}
-                                </Link>
-                            ))
-                        }
+                                navItems.map((item, index) => (
+                                    <Link
+                                        className='font-semibold text-black hover:text-red-400 duration-100'
+                                        href={item.path} key={index}>
+                                        {item.title}
+                                    </Link>
+                                ))
+                            }
                         </ul>
                     </div>
                     <Link href='/'>
-                        <Image src="/assests/icon/favicon.png" alt='logo' height={60} width={120}></Image>
+                        <Image src="/assests/icon/logo.png" alt='logo' height={60} width={120}></Image>
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <div className='flex items-center gap-20'>
                         {
                             navItems.map((item, index) => (
-                                <Link 
-                                className='text-white duration-500 hover:line-through'
-                                href={item.path} key={index}>
+                                <Link
+                                className={`text-black hover:line-through duration-100`} 
+                                    href={item.path} key={index}>
                                     {item.title}
                                 </Link>
                             ))
@@ -74,7 +76,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-end">
-                    <a className="text-white border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-slate-800 duration-150" >Login</a>
+                    <LoginButton></LoginButton>
                 </div>
             </div>
         </div>

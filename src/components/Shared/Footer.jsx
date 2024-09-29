@@ -2,8 +2,10 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <div style={{ backgroundImage: `linear-gradient(45deg,rgba(0,0,0,0.4), rgba(0,0,0,0.4)) ,url(/assests/wave.svg)` }}>
-            <footer className="footer bg-base-300 text-base-content p-10">
+        <div>
+            <footer 
+            style={{ backgroundImage: `linear-gradient(45deg,rgba(0,0,0,0.4), rgba(0,0,0,0.4)) ,url(/assests/footer.jpg)` }}
+            className="footer bg-base-300 text-white p-10 lg:p-14 bg-cover bg-center">
                 <nav>
                     <h6 className="footer-title">Services</h6>
                     <a className="link link-hover">Branding</a>
