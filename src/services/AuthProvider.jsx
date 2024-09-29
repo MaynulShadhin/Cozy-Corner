@@ -1,9 +1,10 @@
+'use client'
 import React from 'react';
 
-const AuthProvider = () => {
+const AuthProvider = ({children}) => {
     return (
         <div>
-            Auth Provider
+            {children}
         </div>
     );
 };

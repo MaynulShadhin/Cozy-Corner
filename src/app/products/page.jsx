@@ -1,8 +1,16 @@
 import React from 'react';
-import { products } from '../../lib/product'
 import Image from 'next/image';
 
-const page = () => {
+const getProducts = async() =>{
+    const res = await fetch('http://localhost:3000/products/api/get-all')
+    const products = res.json()
+    return products
+}
+
+const page = async() => {
+
+    const {products} = await getProducts()
+
     return (
         <div className='mx-auto container p-12'>
             <div className='text-center w-full mb-8'>
@@ -12,7 +20,7 @@ const page = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-center justify-center col-span-2'>
                 {/* card */}
                 {
-                    products.map((product, idx) => (
+                    products?.map((product, idx) => (
                         <div
                             className='hover:scale-105 transition-all duration-200 cursor-pointer border border-gray-200'
                             key={idx}>

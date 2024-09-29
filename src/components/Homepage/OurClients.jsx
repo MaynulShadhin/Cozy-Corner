@@ -36,7 +36,7 @@ const OurClients = () => {
             {/* review swiper */}
             <div
                 style={{ backgroundImage: `linear-gradient(45deg,rgba(0,0,0,0.4), rgba(0,0,0,0.4)) ,url(/assests/clientbg.jpg)` }}
-                className='mt-8 bg-cover bg-center rounded-md'>
+                className='mt-8 bg-cover bg-center rounded-md md:flex items-center justify-center md:h-[400px]'>
                 <Swiper
                     autoplay={{
                         delay: 1000,
@@ -52,10 +52,10 @@ const OurClients = () => {
                         testimonials.map((testimonial, idx) => (
                             <SwiperSlide key={idx}>
                                 <div className='flex flex-col md:flex-row items-start justify-between w-full gap-12 p-8'>
-                                    <div className='w-[400px] h-full'>
+                                    <div className='w-[400px] h-full flex-1'>
                                         <Image className='rounded-badge border-2 border-white p-1' src={testimonial.img} alt={testimonial.name} width={400} height={300}></Image>
                                     </div>
-                                    <div>
+                                    <div className='flex-1'>
                                         <h1 className='text-7xl text-white'>’’</h1>
                                         <h2 className='text-3xl mb-2 font-medium text-white'>{testimonial.name}</h2>
                                         <p className='text-white'>{testimonial.review}</p>

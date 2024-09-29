@@ -1,8 +1,9 @@
 import localFont from "next/font/local";
-import {Poppins} from "@next/font/google"
+import { Poppins } from "@next/font/google"
 import "./globals.css";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
+import AuthProvider from "@/services/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,8 +16,8 @@ const geistMono = localFont({
   weight: "100 900",
 });
 const poppins = Poppins({
-subsets: ['latin'],
-weight: ['100','300','400','700']
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '700']
 })
 
 export const metadata = {
@@ -27,13 +28,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
+
       <body
         className={poppins.className}
       >
-        <Navbar></Navbar>
-        {children}
-        <Footer></Footer>
+        <AuthProvider>
+          <Navbar></Navbar>
+          {children}
+          <Footer></Footer>
+        </AuthProvider>
       </body>
+
     </html>
   );
 }
