@@ -1,10 +1,10 @@
+import axios from "axios"
+
 export const getProducts = async () => {
-    const res = await fetch('http://localhost:3000/products/api/get-all')
-    const products = res.json()
-    return products
+    const res = await axios.get('http://localhost:3000/products/api/get-all')
+    return res.data
 }
 export const getProductDetails = async (id) => {
-    const res = await fetch(`http://localhost:3000/products/api/${id}`)
-    const product = res.json()
-    return product
+    const res = await axios.get(`http://localhost:3000/products/api/${id}`)
+    return res.data
 }

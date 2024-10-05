@@ -2,23 +2,26 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {signIn} from 'next-auth/react'
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation';
 import SocialSignIn from '@/components/SocialSignIn';
 
 const page = () => {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const path = searchParams.get("redirect")
 
-    const handleLogin = async(e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
-        const res = await signIn('credentials',{
-            email,password,
-            redirect: false
+        const res = await signIn('credentials', {
+            email, password,
+            redirect: true,
+            callbackUrl: path ? path : '/'
         });
         console.log(res)
-        if(res.status === 200){
+        if (res.status === 200) {
             router.push('/')
         }
     }
@@ -31,9 +34,9 @@ const page = () => {
                     <h2 className="text-3xl font-extrabold text-gray-900 text-center">Welcome Back!</h2>
                     <p className="text-center text-gray-600 mt-2 mb-6">Please sign in to your account</p>
 
-                    <form 
-                    onSubmit={handleLogin}
-                    className="space-y-6">
+                    <form
+                        onSubmit={handleLogin}
+                        className="space-y-6">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
                             <input
