@@ -24,7 +24,7 @@ const OurProducts = async () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-center justify-center col-span-2'>
                     {/* card */}
                     {
-                        products?.map((product) => (
+                        products?.slice(0, 6).map((product) => (
                             <ProductCard key={product.id} product={product}></ProductCard>
                         ))
                     }

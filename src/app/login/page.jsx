@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {signIn} from 'next-auth/react'
 import { useRouter } from 'next/navigation';
+import SocialSignIn from '@/components/SocialSignIn';
 
 const page = () => {
     const router = useRouter()
@@ -63,6 +64,9 @@ const page = () => {
                             </button>
                         </div>
                     </form>
+                    <div className="mt-4">
+                        <SocialSignIn></SocialSignIn>
+                    </div>
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600">Don’t have an account?{" "}

@@ -1,7 +1,9 @@
 import { connectDB } from "@/lib/connectDB";
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from 'bcrypt'
+import GoogleProvider from "next-auth/providers/google"
+import bcrypt from "bcrypt"
+
 const handler = NextAuth({
     session: {
         strategy: 'jwt',
@@ -24,17 +26,44 @@ const handler = NextAuth({
                     return null;
                 }
                 const passwordMatched = bcrypt.compareSync(password, currentUser.password)
-                if(!passwordMatched){
+                if (!passwordMatched) {
                     return null;
                 }
                 return currentUser;
 
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+            clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
         })
     ],
-    callbacks: {},
     pages: {
         signIn: '/login'
+    },
+    callbacks: {
+        async signIn({ user, account }) {
+            if (account.provider === 'google') {
+                const { name, email, image } = user;
+                try {
+                    const db = await connectDB()
+                    const userCollection = db.collection('users')
+                    const userExist = await userCollection.findOne({ email })
+                    if (!userExist) {
+                        const res = await userCollection.insertOne(user)
+                        return user;
+                    }
+                    else {
+                        return user;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            else {
+                return user;
+            }
+        },
     },
 })
 

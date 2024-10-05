@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SocialSignIn from '@/components/SocialSignIn';
 
 const page = () => {
 
@@ -12,7 +13,8 @@ const page = () => {
         const newUser = {
             name: e.target.name.value,
             email: e.target.email.value,
-            password: e.target.password.value
+            password: e.target.password.value,
+            image: e.target.image.value,
         }
         const res = await fetch("http://localhost:3000/signup/api", {
             method: "POST",
@@ -43,6 +45,16 @@ const page = () => {
                             <input
                                 id="name"
                                 name="name"
+                                type="text"
+                                required
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
+                            <input
+                                id="image"
+                                name="image"
                                 type="text"
                                 required
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
@@ -79,6 +91,10 @@ const page = () => {
                             </button>
                         </div>
                     </form>
+
+                    <div className="mt-4">
+                        <SocialSignIn></SocialSignIn>
+                    </div>
                     <ToastContainer />
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600">Already have an account?{" "}

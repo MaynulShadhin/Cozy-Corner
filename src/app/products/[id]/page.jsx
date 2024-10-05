@@ -28,7 +28,7 @@ const page = async ({ params }) => {
                     </p>
 
                     {/* Add to Cart Button */}
-                    <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                    <button className="bg-slate-800 text-white font-semibold py-2 px-4 rounded hover:bg-slate-500 transition duration-200">
                         Add to Cart
                     </button>
                 </div>

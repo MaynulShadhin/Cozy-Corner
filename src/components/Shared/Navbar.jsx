@@ -79,31 +79,32 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="navbar-end">
-                    {
-                        session.data ?
-                            <div>
-                                <div className="dropdown dropdown-end z-10">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <div className="w-10 rounded-full">
-                                            <Image src="/" alt='profile photo' width={40} height={40}></Image>
-                                        </div>
+                <div className="navbar-end mb-4">
+                    {session?.status === "loading" &&
+                        <span className="loading loading-spinner loading-lg"></span>}
+                    {session?.status === "authenticated" &&
+                        <div>
+                            <div className="dropdown dropdown-end z-10">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-12 rounded-full">
+                                        <Image src={session?.data?.user?.image} alt={session?.data?.user?.name} width={48} height={48}></Image>
                                     </div>
-                                    <ul
-                                        tabIndex={0}
-                                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                        <li><a>Settings</a></li>
-                                        <li><button
-                                            className="text-black border border-white px-4 py-2 cursor-pointer hover:bg-slate-800 hover:text-white duration-150 rounded-md"
-                                            onClick={() => signOut()}>Logout</button></li>
-                                    </ul>
                                 </div>
-
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                    <li className="text-black border border-white px-4 py-2 cursor-pointer hover:bg-slate-800 hover:text-white duration-150 rounded-md">{session?.data?.user?.name}</li>
+                                    <li><button
+                                        className="text-black border border-white px-4 py-2 cursor-pointer hover:bg-red-500 hover:text-white duration-150 rounded-md"
+                                        onClick={() => signOut()}>Logout</button></li>
+                                </ul>
                             </div>
-                            :
-                            <Link href="/login" className="text-white border border-white px-4 py-2 cursor-pointer hover:bg-slate-800 hover:text-white duration-150 rounded-md">
-                                Login
-                            </Link>
+
+                        </div>}
+                    {session?.status === "unauthenticated" &&
+                        <Link href="/login" className="text-white border border-white px-4 py-2 cursor-pointer hover:bg-slate-800 hover:text-white duration-150 rounded-md">
+                            Login
+                        </Link>
                     }
                 </div>
             </div>
