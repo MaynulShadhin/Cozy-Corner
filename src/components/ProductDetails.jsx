@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
 const ProductDetails = ({ product }) => {
@@ -27,9 +27,12 @@ const ProductDetails = ({ product }) => {
         try {
             const res = await axios.post('http://localhost:3000/cart/api/newCart', cartData);
             console.log(res)
-            // if(res.data.success ==='true'){
-            //     toast.success('Added to Cart')
-            // }
+            if (res.data.success) {
+                toast.success('Added to Cart')
+            }
+            else{
+                toast.error(res.data.message);
+            }
         } catch (error) {
             console.log(error)
         }
@@ -64,6 +67,7 @@ const ProductDetails = ({ product }) => {
                     </button>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

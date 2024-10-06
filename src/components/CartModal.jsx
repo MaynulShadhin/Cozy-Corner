@@ -1,8 +1,10 @@
+'use client'
 import React from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import { FiAlertCircle } from "react-icons/fi";
+import { IoCartOutline } from 'react-icons/io5';
 
-const CartModal = ({ isOpen, setIsOpen }) => {
+const CartModal = ({ isOpen, setIsOpen, cartItem }) => {
     return (
         <AnimatePresence>
             {isOpen && (
@@ -18,20 +20,41 @@ const CartModal = ({ isOpen, setIsOpen }) => {
                         animate={{ scale: 1, rotate: "0deg" }}
                         exit={{ scale: 0, rotate: "0deg" }}
                         onClick={(e) => e.stopPropagation()}
-                        className="bg-gradient-to-br from-violet-600 to-indigo-600 text-white p-6 rounded-lg w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
+                        className="bg-gradient-to-br from-slate-600 to-gray-200 text-white p-6 rounded-lg w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
                     >
                         <FiAlertCircle className="text-white/10 rotate-12 text-[250px] absolute z-0 -top-24 -left-24" />
                         <div className="relative z-10">
-                            <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-indigo-600 grid place-items-center mx-auto">
-                                <FiAlertCircle />
+                            <div>
+                                <IoCartOutline className="text-4xl"></IoCartOutline>
                             </div>
-                            <h3 className="text-3xl font-bold text-center mb-2">
-                                One more thing!
-                            </h3>
-                            <p className="text-center mb-6">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                                aperiam vitae, sapiente ducimus eveniet in velit.
-                            </p>
+                            <div className="overflow-x-auto p-4">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Email</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cartItem?.length > 0 ? (
+                                            cartItem.map((item, index) => (
+                                                <tr key={item._id}>
+                                                    <th>{index + 1}</th>
+                                                    <td>{item.userEmail}</td>
+                                                    <td>{item.productName}</td>
+                                                    <td>$100</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="4" className="text-center">No items in the cart.</td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => setIsOpen(false)}
@@ -43,7 +66,7 @@ const CartModal = ({ isOpen, setIsOpen }) => {
                                     onClick={() => setIsOpen(false)}
                                     className="bg-white hover:opacity-90 transition-opacity text-indigo-600 font-semibold w-full py-2 rounded"
                                 >
-                                    Understood!
+                                    Order
                                 </button>
                             </div>
                         </div>

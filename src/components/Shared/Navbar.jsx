@@ -1,15 +1,27 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { IoCartOutline } from "react-icons/io5";
 import CartModal from '../CartModal';
-
+import axios from 'axios';
 const Navbar = () => {
     const pathName = usePathname();
+    const session = useSession();
     const [isOpen, setIsOpen] = useState(false);
+    const [cartItem, setCartItem] = useState([]);
+
+    const getCartItem = async () => {
+        const res = await axios.get(`http://localhost:3000/cart/api/${session?.data?.user?.email}`)
+        setCartItem(res.data.product)
+        return res.data.product
+    }
+    useEffect(() => {
+        getCartItem()
+    }, [session])
+
     const navItems = [
         {
             title: 'Home',
@@ -28,9 +40,6 @@ const Navbar = () => {
             path: '/contacts'
         },
     ]
-
-    const session = useSession()
-
     return (
         <div className='bg-slate-800 shadow-sm shadow-black w-full'>
             <div className="navbar bg-transparent md:py-2">
@@ -92,9 +101,10 @@ const Navbar = () => {
                                     onClick={() => setIsOpen(true)}
                                     className="btn">
                                     <IoCartOutline className="text-2xl"></IoCartOutline>
-                                    <div className="badge badge-secondary">+99</div>
+                                    <div className="badge bg-slate-400">{cartItem.length}</div>
                                 </button>
                                 <CartModal
+                                    cartItem={cartItem}
                                     isOpen={isOpen} setIsOpen={setIsOpen}
                                 ></CartModal>
                             </div>
