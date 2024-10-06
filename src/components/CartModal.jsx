@@ -44,7 +44,7 @@ const CartModal = ({ isOpen, setIsOpen, cartItem }) => {
                                                     <th>{index + 1}</th>
                                                     <td>{item.userEmail}</td>
                                                     <td>{item.productName}</td>
-                                                    <td>$100</td>
+                                                    <td>${item.price}</td>
                                                 </tr>
                                             ))
                                         ) : (
@@ -64,7 +64,7 @@ const CartModal = ({ isOpen, setIsOpen, cartItem }) => {
                                 </button>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="bg-white hover:opacity-90 transition-opacity text-indigo-600 font-semibold w-full py-2 rounded"
+                                    className="bg-white hover:bg-gray-100 transition-all text-slate-600 font-semibold w-full py-2 rounded"
                                 >
                                     Order
                                 </button>

@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = ({ product }) => {
     const { name, image, price, _id } = product;
@@ -21,6 +22,7 @@ const ProductDetails = ({ product }) => {
         const cartData = {
             productName: product.name,
             productId: product._id,
+            price,
             userName,
             userEmail
         }
@@ -30,7 +32,7 @@ const ProductDetails = ({ product }) => {
             if (res.data.success) {
                 toast.success('Added to Cart')
             }
-            else{
+            else {
                 toast.error(res.data.message);
             }
         } catch (error) {

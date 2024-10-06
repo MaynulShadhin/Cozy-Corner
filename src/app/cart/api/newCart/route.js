@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 // POST request handler
 export async function POST(req) {
     const cartData = await req.json();
-    const { productName, productId, userName, userEmail } = cartData;
+    const { productName, productId, userName, price, userEmail } = cartData;
 
     const db = await connectDB();
     const existingItem = await db.collection('cart').findOne({ userEmail, productId });
