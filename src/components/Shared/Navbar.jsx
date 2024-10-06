@@ -1,11 +1,15 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { IoCartOutline } from "react-icons/io5";
+import CartModal from '../CartModal';
 
 const Navbar = () => {
-
+    const pathName = usePathname();
+    const [isOpen, setIsOpen] = useState(false);
     const navItems = [
         {
             title: 'Home',
@@ -26,7 +30,6 @@ const Navbar = () => {
     ]
 
     const session = useSession()
-    console.log(session)
 
     return (
         <div className='bg-slate-800 shadow-sm shadow-black w-full'>
@@ -53,7 +56,7 @@ const Navbar = () => {
                             {
                                 navItems.map((item, index) => (
                                     <Link
-                                        className='font-semibold text-black hover:text-red-400 duration-100'
+                                        className={`font-semibold text-black hover:bg-red-400 duration-100 mb-2 p-2 ${pathName === item.path && 'font-semibold bg-red-400 duration-100'}`}
                                         href={item.path} key={index}>
                                         {item.title}
                                     </Link>
@@ -70,7 +73,7 @@ const Navbar = () => {
                         {
                             navItems.map((item, index) => (
                                 <Link
-                                    className={`text-white hover:line-through duration-100`}
+                                    className={`text-white hover:line-through duration-100 ${pathName === item.path && 'text-white underline duration-100'}`}
                                     href={item.path} key={index}>
                                     {item.title}
                                 </Link>
@@ -83,7 +86,18 @@ const Navbar = () => {
                     {session?.status === "loading" &&
                         <span className="loading loading-spinner loading-lg"></span>}
                     {session?.status === "authenticated" &&
-                        <div>
+                        <div className="flex items-center gap-2 md:gap-6">
+                            <div className="text-white">
+                                <button
+                                    onClick={() => setIsOpen(true)}
+                                    className="btn">
+                                    <IoCartOutline className="text-2xl"></IoCartOutline>
+                                    <div className="badge badge-secondary">+99</div>
+                                </button>
+                                <CartModal
+                                    isOpen={isOpen} setIsOpen={setIsOpen}
+                                ></CartModal>
+                            </div>
                             <div className="dropdown dropdown-end z-10">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-12 rounded-full">

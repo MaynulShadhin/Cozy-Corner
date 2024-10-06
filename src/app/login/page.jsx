@@ -6,7 +6,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation';
 import SocialSignIn from '@/components/SocialSignIn';
 
-const page = () => {
+const LoginPage = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
     const path = searchParams.get("redirect")
@@ -84,4 +84,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default LoginPage;

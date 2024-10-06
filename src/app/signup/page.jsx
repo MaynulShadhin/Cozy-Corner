@@ -5,9 +5,10 @@ import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SocialSignIn from '@/components/SocialSignIn';
+import { useRouter } from 'next/navigation';
 
-const page = () => {
-
+const SignUpPage = () => {
+    const router = useRouter()
     const handleSignUp = async (e) => {
         e.preventDefault();
         const newUser = {
@@ -15,6 +16,7 @@ const page = () => {
             email: e.target.email.value,
             password: e.target.password.value,
             image: e.target.image.value,
+            type: 'member'
         }
         const res = await fetch("http://localhost:3000/signup/api", {
             method: "POST",
@@ -26,6 +28,7 @@ const page = () => {
         if (res.status === 200) {
             toast.success("Signed Up Successfully")
             e.target.reset()
+            router.push('/login')
         }
     }
 
@@ -110,4 +113,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default SignUpPage;
