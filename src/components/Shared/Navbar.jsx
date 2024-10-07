@@ -7,20 +7,38 @@ import { usePathname } from 'next/navigation';
 import { IoCartOutline } from "react-icons/io5";
 import CartModal from '../CartModal';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Navbar = () => {
     const pathName = usePathname();
     const session = useSession();
     const [isOpen, setIsOpen] = useState(false);
     const [cartItem, setCartItem] = useState([]);
+    const [cartUpdated, setCartUpdated] = useState(false);
 
     const getCartItem = async () => {
         const res = await axios.get(`http://localhost:3000/cart/api/${session?.data?.user?.email}`)
         setCartItem(res.data.product)
         return res.data.product
     }
+
+    const handleDelete = async (id) => {
+        const res = await axios.delete(`http://localhost:3000/cart/api/deleteCart/${id}`)
+        if (res.data.response.deletedCount > 0) {
+            toast.success('deleted successfully')
+            getCartItem()
+        }
+        console.log(res);
+    }
+
+
     useEffect(() => {
-        getCartItem()
-    }, [session])
+        getCartItem();
+    }, [session, cartUpdated]);
+
+    const handleCartUpdate = () => {
+        setCartUpdated(prev => !prev)
+    }
 
     const navItems = [
         {
@@ -104,7 +122,9 @@ const Navbar = () => {
                                     <div className="badge bg-slate-400">{cartItem.length}</div>
                                 </button>
                                 <CartModal
+                                    handleCartUpdate={handleCartUpdate}
                                     cartItem={cartItem}
+                                    handleDelete={handleDelete}
                                     isOpen={isOpen} setIsOpen={setIsOpen}
                                 ></CartModal>
                             </div>
@@ -131,6 +151,7 @@ const Navbar = () => {
                         </Link>
                     }
                 </div>
+                <ToastContainer></ToastContainer>
             </div>
         </div>
     );
