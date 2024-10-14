@@ -1,19 +1,29 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import { FiAlertCircle } from "react-icons/fi";
 import { IoCartOutline } from 'react-icons/io5';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { MdDeleteSweep } from 'react-icons/md';
 
-const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
+const CartModal = ({ isOpen, setIsOpen, cartItems, handleDelete }) => {
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [location, setLocation] = useState('');
     const [error, setError] = useState('')
-    const totalPrice = cartItem.reduce((total, item) => total + item.price, 0);
+    const [localCartItems, setLocalCartItems] = useState([]);
+
+    useEffect(() => {
+        if (Array.isArray(cartItems)) {
+            setLocalCartItems(cartItems);
+        } else {
+            console.error('cartItems is not an array:', cartItems);
+            setLocalCartItems([]);
+        }
+    }, [cartItems]);
+
+    const totalPrice = localCartItems.reduce((total, item) => total + (item?.price || 0), 0);
 
     const handleOrder = async () => {
         if (!phoneNumber || !location) {
@@ -24,7 +34,7 @@ const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
         const orderData = {
             phoneNumber,
             location,
-            items: cartItem,
+            items: cartItems,
             orderDate: new Date()
         }
         try {
@@ -66,7 +76,7 @@ const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
                             <div>
                                 <IoCartOutline className="text-4xl"></IoCartOutline>
                             </div>
-                            <h2 className="text-xl mt-2">Total Order: {cartItem.length}</h2>
+                            <h2 className="text-xl mt-2">Total Order: {cartItems.length}</h2>
                             <div className="overflow-x-auto p-4">
                                 <table className="table">
                                     <thead>
@@ -78,8 +88,8 @@ const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {cartItem?.length > 0 ? (
-                                            cartItem.map((item, index) => (
+                                        {cartItems?.length > 0 ? (
+                                            cartItems.map((item, index) => (
                                                 <tr key={item._id}>
                                                     <th>{index + 1}</th>
                                                     <td>{item.userEmail}</td>
@@ -98,7 +108,7 @@ const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
                                     </tbody>
                                 </table>
                                 <div className="divider"></div>
-                                <h2 className="text-end w-full my-2">Total Price: {cartItem ? totalPrice : '0'}</h2>
+                                <h2 className="text-end w-full my-2">Total Price: {cartItems ? totalPrice : '0'}</h2>
                                 <div className="w-full flex flex-col md:flex-row items-center justify-center my-4 gap-2">
                                     <input
                                         value={phoneNumber}
@@ -129,7 +139,6 @@ const CartModal = ({ isOpen, setIsOpen, cartItem,handleDelete }) => {
                             </div>
                         </div>
                     </motion.div>
-                    <ToastContainer></ToastContainer>
                 </motion.div>
             )}
         </AnimatePresence>

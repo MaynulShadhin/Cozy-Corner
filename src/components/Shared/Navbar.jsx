@@ -6,39 +6,28 @@ import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { IoCartOutline } from "react-icons/io5";
 import CartModal from '../CartModal';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { useCart } from '@/services/CartContext';
 const Navbar = () => {
     const pathName = usePathname();
     const session = useSession();
     const [isOpen, setIsOpen] = useState(false);
-    const [cartItem, setCartItem] = useState([]);
-    const [cartUpdated, setCartUpdated] = useState(false);
-
-    const getCartItem = async () => {
-        const res = await axios.get(`http://localhost:3000/cart/api/${session?.data?.user?.email}`)
-        setCartItem(res.data.product)
-        return res.data.product
-    }
-
-    const handleDelete = async (id) => {
-        const res = await axios.delete(`http://localhost:3000/cart/api/deleteCart/${id}`)
-        if (res.data.response.deletedCount > 0) {
-            toast.success('deleted successfully')
-            getCartItem()
-        }
-        console.log(res);
-    }
-
+    const { cartItems, fetchCartItems, removeFromCart } = useCart();
 
     useEffect(() => {
-        getCartItem();
-    }, [session, cartUpdated]);
+        if (session?.data?.user?.email) {
+            fetchCartItems(session.data.user.email);
+        }
+    }, [session]);
 
-    const handleCartUpdate = () => {
-        setCartUpdated(prev => !prev)
-    }
+    const handleDelete = async (id) => {
+        const success = await removeFromCart(id);
+        if (success) {
+            toast.success('Deleted successfully');
+        } else {
+            toast.error('Failed to delete item');
+        }
+    };
 
     const navItems = [
         {
@@ -119,11 +108,10 @@ const Navbar = () => {
                                     onClick={() => setIsOpen(true)}
                                     className="btn">
                                     <IoCartOutline className="text-2xl"></IoCartOutline>
-                                    <div className="badge bg-slate-400">{cartItem.length}</div>
+                                    <div className="badge bg-slate-400">{cartItems.length}</div>
                                 </button>
                                 <CartModal
-                                    handleCartUpdate={handleCartUpdate}
-                                    cartItem={cartItem}
+                                    cartItems={cartItems}
                                     handleDelete={handleDelete}
                                     isOpen={isOpen} setIsOpen={setIsOpen}
                                 ></CartModal>
@@ -151,7 +139,6 @@ const Navbar = () => {
                         </Link>
                     }
                 </div>
-                <ToastContainer></ToastContainer>
             </div>
         </div>
     );

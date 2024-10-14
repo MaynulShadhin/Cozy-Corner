@@ -4,6 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
 import AuthProvider from "@/services/AuthProvider";
+import { CartProvider } from "@/services/CartContext";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,9 +36,12 @@ export default function RootLayout({ children }) {
         className={poppins.className}
       >
         <AuthProvider>
-          <Navbar></Navbar>
-          {children}
-          <Footer></Footer>
+          <CartProvider>
+            <Navbar></Navbar>
+            {children}
+            <Footer></Footer>
+          </CartProvider>
+          <ToastContainer></ToastContainer>
         </AuthProvider>
       </body>
 

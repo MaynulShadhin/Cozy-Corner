@@ -2,14 +2,13 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { useCart } from '@/services/CartContext';
 
 const ProductDetails = ({ product }) => {
     const { name, image, price, _id } = product;
     const { data: session } = useSession()
-    console.log(session)
+    const { addToCart } = useCart()
 
     const handleAddToCart = async () => {
 
@@ -26,17 +25,11 @@ const ProductDetails = ({ product }) => {
             userName,
             userEmail
         }
-        try {
-            const res = await axios.post('http://localhost:3000/cart/api/newCart', cartData);
-            console.log(res)
-            if (res.data.success) {
-                toast.success('Added to Cart')
-            }
-            else {
-                toast.error(res.data.message);
-            }
-        } catch (error) {
-            console.log(error)
+        const success = await addToCart(cartData);
+        if (success) {
+            toast.success('Added to Cart');
+        } else {
+            toast.error('Failed to add to cart');
         }
     }
     return (
@@ -69,7 +62,6 @@ const ProductDetails = ({ product }) => {
                     </button>
                 </div>
             </div>
-            <ToastContainer></ToastContainer>
         </div>
     );
 };
