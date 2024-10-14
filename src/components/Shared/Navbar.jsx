@@ -44,7 +44,7 @@ const Navbar = () => {
         },
         {
             title: 'Contacts',
-            path: '/contacts'
+            path: '/contact'
         },
     ]
     return (
