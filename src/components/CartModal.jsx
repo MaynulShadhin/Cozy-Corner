@@ -6,6 +6,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { MdDeleteSweep } from 'react-icons/md';
+import { useSession } from 'next-auth/react';
 
 const CartModal = ({ isOpen, setIsOpen, cartItems, handleDelete }) => {
 
@@ -13,6 +14,8 @@ const CartModal = ({ isOpen, setIsOpen, cartItems, handleDelete }) => {
     const [location, setLocation] = useState('');
     const [error, setError] = useState('')
     const [localCartItems, setLocalCartItems] = useState([]);
+    const session = useSession()
+    console.log(session?.data?.user?.email);
 
     useEffect(() => {
         if (Array.isArray(cartItems)) {
@@ -28,14 +31,20 @@ const CartModal = ({ isOpen, setIsOpen, cartItems, handleDelete }) => {
     const handleOrder = async () => {
         if (!phoneNumber || !location) {
             setError('Please Fill in all fields')
+            return
         } else {
             setError('')
         }
         const orderData = {
             phoneNumber,
             location,
-            items: cartItems,
-            orderDate: new Date()
+            email: session?.data?.user?.email,
+            cartId: cartItems.map(item => item._id),
+            productId: cartItems.map(item => item.productId),
+            productName: cartItems.map(item => item.productName),
+            price: cartItems.map(item => item.price),
+            orderDate: new Date(),
+            totalPrice
         }
         try {
             const res = await axios.post('http://localhost:3000/order/api/orders', orderData)
@@ -90,11 +99,11 @@ const CartModal = ({ isOpen, setIsOpen, cartItems, handleDelete }) => {
                                     <tbody>
                                         {cartItems?.length > 0 ? (
                                             cartItems.map((item, index) => (
-                                                <tr key={item._id}>
+                                                <tr key={item?._id}>
                                                     <th>{index + 1}</th>
-                                                    <td>{item.userEmail}</td>
-                                                    <td>{item.productName}</td>
-                                                    <td>${item.price}</td>
+                                                    <td>{item?.userEmail}</td>
+                                                    <td>{item?.productName}</td>
+                                                    <td>${item?.price}</td>
                                                     <td><MdDeleteSweep
                                                         onClick={() => handleDelete(item._id)}
                                                         className="text-xl text-gray-600 cursor-pointer"></MdDeleteSweep></td>
