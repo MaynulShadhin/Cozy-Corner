@@ -20,6 +20,10 @@ const Navbar = () => {
         }
     }, [session]);
 
+    useEffect(()=>{
+
+    },[cartItems])
+
     const handleDelete = async (id) => {
         const success = await removeFromCart(id);
         if (success) {
